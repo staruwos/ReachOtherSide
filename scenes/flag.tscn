@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://d1mu58thyrgej"]
+
+[ext_resource type="Shader" path="res://data/shaders/flag.gdshader" id="1_n87i5"]
+[ext_resource type="Script" path="res://data/scripts/FinishFlag.gd" id="2_1x16j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jy06v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v0kkk"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_jy06v")
+shader = ExtResource("1_n87i5")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2540t"]
+lightmap_size_hint = Vector2i(12, 12)
+material = SubResource("ShaderMaterial_v0kkk")
+add_uv2 = true
+subdivide_width = 32
+subdivide_depth = 32
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cdenj"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_2540t")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(2.23609, 0, 0, 0, 2.23609, 0, 0, 0, 2.23609, 0, 0, 0)
+script = ExtResource("2_1x16j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_cdenj")
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]

@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dvbgf6drv86br"]
+[gd_scene load_steps=12 format=3 uid="uid://dvbgf6drv86br"]
 
 [ext_resource type="PackedScene" uid="uid://cwiu8nsyij4gn" path="res://data/player/player.tscn" id="1_tnv5a"]
 [ext_resource type="Script" path="res://data/scripts/world.gd" id="1_x87ln"]
 [ext_resource type="Texture2D" uid="uid://bfmbndv1sge56" path="res://data/sky.exr" id="3_5hgqm"]
 [ext_resource type="Texture2D" uid="uid://cknnpbe7gnutf" path="res://data/prototype/Green/texture_01.png" id="3_hpn24"]
 [ext_resource type="Texture2D" uid="uid://cjmy06h4u2c4r" path="res://data/prototype/Orange/texture_01.png" id="4_x8haq"]
+[ext_resource type="PackedScene" uid="uid://d1mu58thyrgej" path="res://scenes/flag.tscn" id="6_qoktp"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6bxyf"]
 panorama = ExtResource("3_5hgqm")
@@ -48,7 +49,7 @@ size = Vector3(12, 1, 14)
 material = SubResource("StandardMaterial3D_jxrtg")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="geometry"]
-transform = Transform3D(1, 0, 0, 0, 0.893982, 0.448102, 0, -0.448102, 0.893982, 0, 3.08875, 13.0011)
+transform = Transform3D(1, 0, 0, 0, 0.893982, 0.448102, 0, -0.448102, 0.893982, -0.720422, 3.06864, 10.9686)
 use_collision = true
 size = Vector3(12, 1, 14)
 material = SubResource("StandardMaterial3D_jxrtg")
@@ -70,3 +71,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9452, 9.78181, 6.88185)
 use_collision = true
 size = Vector3(6.15289, 2.39448, 3.6875)
 material = SubResource("StandardMaterial3D_i11u5")
+
+[node name="FinishFlag" parent="." instance=ExtResource("6_qoktp")]
+transform = Transform3D(1, 0, 0, 0, 0.0973224, 0.995253, 0, -0.995253, 0.0973224, 0.0923014, 5.69495, 13.2263)
