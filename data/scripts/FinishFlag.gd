@@ -11,6 +11,10 @@ func _process(delta):
 	pass
 
 
-func _on_body_entered(body):
-	if body.name == "player":
-		print(body)
+func _on_body_entered(body: CharacterBody3D):
+	var player := body as Player
+	if not player:
+		return
+	player.finish_level()	
+	
+	

@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+class_name Player
 # Adding Animations
 # ------------------------------------------------
 # 1. Define Animations: Create new animations in Godot's animation tools.
@@ -37,6 +38,9 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var camera_fov_extents: Array[float] = [75.0, 85.0]  # index 0 is normal, index 1 is sprinting
 var base_player_y_scale: float = 1.0
 var crouch_player_y_scale: float = 0.75
+var mouseSensibility = 1200
+var mouse_relative_x = 0
+var mouse_relative_y = 0
 
 # Node References
 @onready var parts: Dictionary = {
@@ -62,7 +66,11 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		handle_mouse_movement(event)
+		rotation.y -= event.relative.x / mouseSensibility
+		$head/camera.rotation.x -= event.relative.y / mouseSensibility
+		$head/camera.rotation.x = clamp($head/camera.rotation.x, deg_to_rad(-90), deg_to_rad(90) )
+		mouse_relative_x = clamp(event.relative.x, -50, 50)
+		mouse_relative_y = clamp(event.relative.y, -50, 10)
 
 # Movement Logic
 func handle_movement_input(delta: float) -> void:
@@ -128,11 +136,21 @@ func handle_jump() -> void:
 		velocity.y += jump_velocity
 
 func move_character(delta: float) -> void:
-	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-	var direction: Vector2 = input_dir.normalized().rotated(-parts["head"].rotation.y)
-	if is_on_floor():
-		velocity.x = lerp(velocity.x, direction.x * speed, accel * delta)
-		velocity.z = lerp(velocity.z, direction.y * speed, accel * delta)
+	#var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	#var direction: Vector2 = input_dir.normalized().rotated(-parts["head"].rotation.y)
+	#if is_on_floor():
+	#	velocity.x = lerp(velocity.x, direction.x * speed, accel * delta)
+	#	velocity.z = lerp(velocity.z, direction.y * speed, accel * delta)
+	# Get the input direction and handle the movement/deceleration.
+	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if direction:
+		velocity.x = direction.x * base_speed
+		velocity.z = direction.z * base_speed
+	else:
+		velocity.x = move_toward(velocity.x, 0, base_speed)
+		velocity.z = move_toward(velocity.z, 0, base_speed)
+	
 	move_and_slide()
 
 # Input Handling
@@ -141,3 +159,9 @@ func handle_mouse_movement(event: InputEventMouseMotion) -> void:
 		parts["head"].rotation_degrees.y -= event.relative.x * sensitivity
 		parts["head"].rotation_degrees.x -= event.relative.y * sensitivity
 		parts["head"].rotation.x = clamp(parts["head"].rotation.x, deg_to_rad(-90), deg_to_rad(90))
+
+
+#reached the flag on the level
+func finish_level() -> void:
+	get_tree().reload_current_scene()
+	

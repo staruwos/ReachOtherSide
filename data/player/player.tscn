@@ -40,10 +40,12 @@ albedo_color = Color(0.917647, 0.529412, 0.168627, 1)
 material = SubResource("StandardMaterial3D_3iwsb")
 
 [node name="player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00337219, 0.00759816, -0.00291586)
+top_level = true
 script = ExtResource("1_u1w3t")
 
 [node name="head" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00337219, 0.607598, -0.00291586)
 
 [node name="camera" type="Camera3D" parent="head"]
 

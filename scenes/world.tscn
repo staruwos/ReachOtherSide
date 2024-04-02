@@ -30,10 +30,6 @@ albedo_texture = ExtResource("4_x8haq")
 [node name="world" type="Node3D"]
 script = ExtResource("1_x87ln")
 
-[node name="player" parent="." node_paths=PackedStringArray("world_ref") instance=ExtResource("1_tnv5a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-world_ref = NodePath("..")
-
 [node name="environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_xj5u1")
 
@@ -74,3 +70,7 @@ material = SubResource("StandardMaterial3D_i11u5")
 
 [node name="FinishFlag" parent="." instance=ExtResource("6_qoktp")]
 transform = Transform3D(1, 0, 0, 0, 0.0973224, 0.995253, 0, -0.995253, 0.0973224, 0.0923014, 5.69495, 13.2263)
+
+[node name="player" parent="." instance=ExtResource("1_tnv5a")]
+transform = Transform3D(-0.997757, 0, -0.0669357, 0, 1, 0, 0.0669357, 0, -0.997757, -1.6978, 2.88325, 0.532093)
+top_level = false
